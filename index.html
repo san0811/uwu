@@ -63,6 +63,10 @@
             box-shadow: 0 8px 20px rgba(255, 107, 107, 0.8);
         }
 
+        .no {
+            position: relative;
+        }
+
         /* Popup Styling */
         .popup {
             display: none;
@@ -117,7 +121,7 @@
         <h2>Please choose wisely! 😏</h2>
         <div class="buttons">
             <button class="button yes" onclick="showPopup('yes')">Yes</button>
-            <button class="button no" onclick="showPopup('no')">No</button>
+            <button class="button no" onclick="moveNoButton()">No</button>
         </div>
     </div>
 
@@ -130,6 +134,20 @@
     </div>
 
     <script>
+        let noButtonMoved = 0;
+
+        function moveNoButton() {
+            const noButton = document.querySelector('.no');
+            if (noButtonMoved < 5) {
+                const randomX = Math.random() * 300 - 150; // Random X offset
+                const randomY = Math.random() * 300 - 150; // Random Y offset
+                noButton.style.transform = `translate(${randomX}px, ${randomY}px)`;
+                noButtonMoved++;
+            } else {
+                showPopup('no');
+            }
+        }
+
         function showPopup(choice) {
             const popup = document.getElementById('popup');
             const overlay = document.getElementById('overlay');
