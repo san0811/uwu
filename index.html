@@ -12,15 +12,6 @@
             100% { background-position: 0% 50%; }
         }
 
-        @keyframes typing {
-            from { width: 0; }
-            to { width: 100%; }
-        }
-
-        @keyframes blink {
-            50% { border-color: transparent; }
-        }
-
         body {
             margin: 0;
             font-family: 'Poppins', sans-serif;
@@ -47,11 +38,8 @@
         h1 {
             font-size: 3rem;
             margin-bottom: 20px;
-            animation: typing 4s steps(30, end), blink 1s step-end infinite;
-            overflow: hidden;
-            white-space: nowrap;
-            border-right: 3px solid #fff;
-            display: inline-block;
+            animation: pulse 3s infinite;
+            text-shadow: 2px 2px 5px rgba(0, 0, 0, 0.3);
         }
 
         h2 {
@@ -77,24 +65,12 @@
         }
 
         .button:hover {
-            transform: rotate(-3deg) scale(1.1);
+            transform: scale(1.1);
             box-shadow: 0 8px 20px rgba(255, 107, 107, 0.8);
         }
 
         .no {
             position: relative;
-        }
-
-        .no:active {
-            animation: shake 0.5s;
-        }
-
-        @keyframes shake {
-            0% { transform: translateX(0); }
-            25% { transform: translateX(-10px); }
-            50% { transform: translateX(10px); }
-            75% { transform: translateX(-10px); }
-            100% { transform: translateX(0); }
         }
 
         .popup {
@@ -110,7 +86,6 @@
             box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
             text-align: center;
             z-index: 1000;
-            animation: fadeIn 0.5s;
         }
 
         .popup img {
@@ -141,17 +116,45 @@
             height: 100%;
             background: rgba(0, 0, 0, 0.5);
             z-index: 999;
-            animation: fadeIn 0.5s;
         }
 
-        @keyframes fadeIn {
-            from { opacity: 0; }
-            to { opacity: 1; }
+        /* Floating Hearts */
+        .heart {
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: #ff6b6b;
+            border-radius: 50%;
+            animation: floatUp 4s linear infinite, fadeOut 4s linear infinite;
+        }
+
+        .heart:before, .heart:after {
+            content: '';
+            position: absolute;
+            width: 20px;
+            height: 20px;
+            background-color: #ff6b6b;
+            border-radius: 50%;
+        }
+
+        .heart:before {
+            top: -10px;
+            left: 0;
+        }
+
+        .heart:after {
+            top: 0;
+            left: -10px;
+        }
+
+        @keyframes floatUp {
+            0% { transform: translateY(0) scale(1); opacity: 1; }
+            100% { transform: translateY(-100vh) scale(0.5); opacity: 0; }
         }
 
         @keyframes fadeOut {
-            from { opacity: 1; }
-            to { opacity: 0; }
+            0% { opacity: 1; }
+            100% { opacity: 0; }
         }
     </style>
 </head>
@@ -197,6 +200,7 @@
             if (choice === 'yes') {
                 popupImage.src = 'https://via.placeholder.com/100?text=Yes';
                 popupText.textContent = 'You made the right choice! ❤️ You’re the best thing that’s ever happened to me! 🌹';
+                createHearts();
             } else {
                 popupImage.src = 'https://via.placeholder.com/100?text=No';
                 popupText.textContent = 'Oh no! 😢 Are you sure about that?';
@@ -211,6 +215,17 @@
             const overlay = document.getElementById('overlay');
             popup.style.display = 'none';
             overlay.style.display = 'none';
+        }
+
+        function createHearts() {
+            for (let i = 0; i < 20; i++) {
+                const heart = document.createElement('div');
+                heart.className = 'heart';
+                heart.style.left = `${Math.random() * 100}vw`;
+                heart.style.animationDelay = `${Math.random() * 4}s`;
+                document.body.appendChild(heart);
+                setTimeout(() => heart.remove(), 4000);
+            }
         }
     </script>
 </body>
