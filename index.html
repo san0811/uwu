@@ -43,7 +43,7 @@
         /* Buttons */
         .buttons {
             display: flex;
-            gap: 20px;
+            gap: 40px;
         }
 
         .button {
@@ -63,145 +63,97 @@
             box-shadow: 0 8px 20px rgba(255, 107, 107, 0.8);
         }
 
-        /* Moving No Button */
-        .no {
-            position: relative;
-        }
-
-        .no:hover {
-            position: absolute;
-            top: calc(50% - 20px);
-            left: calc(50% - 20px);
-            transform: translate(
-                calc(150px - 50vw),
-                calc(-150px + 50vh)
-            );
-        }
-
-        /* Surprise Message */
-        .hidden-message {
+        /* Popup Styling */
+        .popup {
             display: none;
-            font-size: 1.8rem;
-            margin-top: 30px;
-            animation: fadeIn 2s forwards;
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background: rgba(255, 255, 255, 0.9);
+            color: #333;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            text-align: center;
+            z-index: 1000;
         }
 
-        @keyframes fadeIn {
-            from {
-                opacity: 0;
-            }
-            to {
-                opacity: 1;
-            }
+        .popup img {
+            max-width: 100px;
+            margin-bottom: 15px;
         }
 
-        /* Floating Hearts */
-        .hearts {
-            position: absolute;
+        .popup button {
+            padding: 10px 20px;
+            background-color: #ff6b6b;
+            border: none;
+            border-radius: 30px;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        .popup button:hover {
+            transform: scale(1.1);
+            box-shadow: 0 8px 20px rgba(255, 107, 107, 0.8);
+        }
+
+        /* Overlay */
+        .overlay {
+            display: none;
+            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            overflow: hidden;
-            z-index: 1;
-        }
-
-        .heart {
-            position: absolute;
-            width: 15px;
-            height: 15px;
-            background-color: rgba(255, 255, 255, 0.8);
-            transform: rotate(45deg);
-            animation: floatUp 6s linear infinite;
-        }
-
-        .heart::before,
-        .heart::after {
-            content: '';
-            position: absolute;
-            width: 15px;
-            height: 15px;
-            background-color: rgba(255, 255, 255, 0.8);
-            border-radius: 50%;
-        }
-
-        .heart::before {
-            top: -10px;
-            left: 0;
-        }
-
-        .heart::after {
-            left: 10px;
-            top: 0;
-        }
-
-        @keyframes floatUp {
-            0% {
-                transform: translateY(100vh) rotate(45deg);
-                opacity: 1;
-            }
-            100% {
-                transform: translateY(-10vh) rotate(45deg);
-                opacity: 0;
-            }
-        }
-
-        /* Responsive Styling */
-        @media (max-width: 768px) {
-            h1 {
-                font-size: 2.5rem;
-            }
-
-            h2 {
-                font-size: 1.2rem;
-            }
-
-            .button {
-                font-size: 1rem;
-                padding: 10px 20px;
-            }
-
-            .hidden-message {
-                font-size: 1.2rem;
-            }
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 999;
         }
     </style>
 </head>
 <body>
-    <div class="hearts"></div>
     <div class="container">
         <h1>Will you be my favorite person forever Eliyana? 💖</h1>
         <h2>Please choose wisely! 😏</h2>
         <div class="buttons">
-            <button class="button yes" onclick="showSurprise()">Yes</button>
-            <button class="button no">No</button>
+            <button class="button yes" onclick="showPopup('yes')">Yes</button>
+            <button class="button no" onclick="showPopup('no')">No</button>
         </div>
-        <div class="hidden-message">You made the right choice! ❤️ You’re the best thing that’s ever happened to me! 🌹</div>
+    </div>
+
+    <div class="overlay" id="overlay" onclick="closePopup()"></div>
+
+    <div class="popup" id="popup">
+        <img id="popupImage" src="" alt="">
+        <p id="popupText"></p>
+        <button onclick="closePopup()">Close</button>
     </div>
 
     <script>
-        // Create floating hearts
-        function createHearts() {
-            const heartsContainer = document.querySelector('.hearts');
-            for (let i = 0; i < 40; i++) {
-                const heart = document.createElement('div');
-                heart.classList.add('heart');
-                heart.style.left = Math.random() * 100 + 'vw';
-                heart.style.animationDuration = Math.random() * 2 + 5 + 's';
-                heart.style.animationDelay = Math.random() * 5 + 's';
-                heart.style.width = heart.style.height = Math.random() * 20 + 10 + 'px';
-                heartsContainer.appendChild(heart);
+        function showPopup(choice) {
+            const popup = document.getElementById('popup');
+            const overlay = document.getElementById('overlay');
+            const popupImage = document.getElementById('popupImage');
+            const popupText = document.getElementById('popupText');
+
+            if (choice === 'yes') {
+                popupImage.src = 'https://via.placeholder.com/100?text=Yes';
+                popupText.textContent = 'You made the right choice! ❤️ You’re the best thing that’s ever happened to me! 🌹';
+            } else {
+                popupImage.src = 'https://via.placeholder.com/100?text=No';
+                popupText.textContent = 'Oh no! 😢 Are you sure about that?';
             }
+
+            popup.style.display = 'block';
+            overlay.style.display = 'block';
         }
 
-        // Show the surprise message when "Yes" is clicked
-        function showSurprise() {
-            const message = document.querySelector('.hidden-message');
-            message.style.display = 'block';
+        function closePopup() {
+            const popup = document.getElementById('popup');
+            const overlay = document.getElementById('overlay');
+            popup.style.display = 'none';
+            overlay.style.display = 'none';
         }
-
-        createHearts();
     </script>
 </body>
 </html>
-
