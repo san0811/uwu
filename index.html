@@ -49,7 +49,7 @@
 
         .buttons {
             display: flex;
-            gap: 40px;
+            gap: 20px;
         }
 
         .button {
@@ -117,45 +117,6 @@
             background: rgba(0, 0, 0, 0.5);
             z-index: 999;
         }
-
-        /* Floating Hearts */
-        .heart {
-            position: absolute;
-            width: 20px;
-            height: 20px;
-            background-color: #ff6b6b;
-            border-radius: 50%;
-            animation: floatUp 4s linear infinite, fadeOut 4s linear infinite;
-        }
-
-        .heart:before, .heart:after {
-            content: '';
-            position: absolute;
-            width: 20px;
-            height: 20px;
-            background-color: #ff6b6b;
-            border-radius: 50%;
-        }
-
-        .heart:before {
-            top: -10px;
-            left: 0;
-        }
-
-        .heart:after {
-            top: 0;
-            left: -10px;
-        }
-
-        @keyframes floatUp {
-            0% { transform: translateY(0) scale(1); opacity: 1; }
-            100% { transform: translateY(-100vh) scale(0.5); opacity: 0; }
-        }
-
-        @keyframes fadeOut {
-            0% { opacity: 1; }
-            100% { opacity: 0; }
-        }
     </style>
 </head>
 <body>
@@ -181,12 +142,24 @@
 
         function moveNoButton() {
             const noButton = document.querySelector('.no');
-            if (noButtonMoved < 5) {
-                const randomX = Math.random() * 300 - 150;
-                const randomY = Math.random() * 300 - 150;
-                noButton.style.transform = `translate(${randomX}px, ${randomY}px)`;
+            const container = document.querySelector('.container');
+
+            if (noButtonMoved < 10) {
+                // Get the container dimensions
+                const containerRect = container.getBoundingClientRect();
+
+                // Generate random positions within the container bounds
+                const randomX = Math.random() * (containerRect.width - 100); // Avoid going outside
+                const randomY = Math.random() * (containerRect.height - 50); // Avoid going outside
+
+                // Update the button's position
+                noButton.style.position = 'absolute';
+                noButton.style.left = `${randomX}px`;
+                noButton.style.top = `${randomY}px`;
+
                 noButtonMoved++;
             } else {
+                // Trigger popup after 10 moves
                 showPopup('no');
             }
         }
@@ -198,11 +171,10 @@
             const popupText = document.getElementById('popupText');
 
             if (choice === 'yes') {
-                popupImage.src = 'https://via.placeholder.com/100?text=Yes';
+                popupImage.src = './images/1.jpg';
                 popupText.textContent = 'You made the right choice! ❤️ You’re the best thing that’s ever happened to me! 🌹';
-                createHearts();
             } else {
-                popupImage.src = 'https://via.placeholder.com/100?text=No';
+                popupImage.src = './images/2.jpg';
                 popupText.textContent = 'Oh no! 😢 Are you sure about that?';
             }
 
@@ -216,18 +188,6 @@
             popup.style.display = 'none';
             overlay.style.display = 'none';
         }
-
-        function createHearts() {
-            for (let i = 0; i < 20; i++) {
-                const heart = document.createElement('div');
-                heart.className = 'heart';
-                heart.style.left = `${Math.random() * 100}vw`;
-                heart.style.animationDelay = `${Math.random() * 4}s`;
-                document.body.appendChild(heart);
-                setTimeout(() => heart.remove(), 4000);
-            }
-        }
     </script>
 </body>
 </html>
-
