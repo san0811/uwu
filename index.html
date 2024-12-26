@@ -12,6 +12,35 @@
             100% { background-position: 0% 50%; }
         }
 
+        @keyframes floatUp {
+            0% {
+                transform: translateY(0) scale(1);
+                opacity: 1;
+            }
+            100% {
+                transform: translateY(-200px) scale(0.5);
+                opacity: 0;
+            }
+        }
+
+        @keyframes floatAroundRestricted {
+            0% {
+                transform: translate(0, 0);
+            }
+            25% {
+                transform: translate(calc(20vw - 50px), calc(-10vh + 50px));
+            }
+            50% {
+                transform: translate(calc(-20vw + 50px), calc(-20vh + 50px));
+            }
+            75% {
+                transform: translate(calc(10vw - 50px), calc(10vh - 50px));
+            }
+            100% {
+                transform: translate(0, 0);
+            }
+        }
+
         body {
             margin: 0;
             font-family: 'Poppins', sans-serif;
@@ -117,9 +146,61 @@
             background: rgba(0, 0, 0, 0.5);
             z-index: 999;
         }
+
+        .hearts-container {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            overflow: hidden;
+            z-index: 1;
+        }
+
+        .heart {
+            position: absolute;
+            bottom: 0;
+            width: 30px;
+            height: 30px;
+            background-color: red;
+            transform: rotate(-45deg);
+            animation: floatUp 4s linear infinite;
+        }
+
+        .heart::before,
+        .heart::after {
+            content: '';
+            position: absolute;
+            width: 30px;
+            height: 30px;
+            background-color: red;
+            border-radius: 50%;
+        }
+
+        .heart::before {
+            top: -15px;
+            left: 0;
+        }
+
+        .heart::after {
+            left: 15px;
+            top: 0;
+        }
+
+        .floating-image {
+            position: absolute;
+            width: 100px;
+            height: auto;
+            animation: floatAroundRestricted 10s infinite ease-in-out;
+        }
     </style>
 </head>
 <body>
+    <div class="hearts-container" id="heartsContainer"></div>
+
+    <img src="./images/3.jpg" alt="Floating Fun" class="floating-image">
+
     <div class="container">
         <h1>Will you be my favorite person forever Eliyana? 💖</h1>
         <h2>Please choose wisely! 😏</h2>
@@ -145,21 +226,14 @@
             const container = document.querySelector('.container');
 
             if (noButtonMoved < 10) {
-                // Get the container dimensions
                 const containerRect = container.getBoundingClientRect();
-
-                // Generate random positions within the container bounds
-                const randomX = Math.random() * (containerRect.width - 100); // Avoid going outside
-                const randomY = Math.random() * (containerRect.height - 50); // Avoid going outside
-
-                // Update the button's position
+                const randomX = Math.random() * (containerRect.width - 100);
+                const randomY = Math.random() * (containerRect.height - 50);
                 noButton.style.position = 'absolute';
                 noButton.style.left = `${randomX}px`;
                 noButton.style.top = `${randomY}px`;
-
                 noButtonMoved++;
             } else {
-                // Trigger popup after 10 moves
                 showPopup('no');
             }
         }
@@ -188,6 +262,25 @@
             popup.style.display = 'none';
             overlay.style.display = 'none';
         }
+
+        function createHeart() {
+            const heartsContainer = document.getElementById('heartsContainer');
+            const heart = document.createElement('div');
+            heart.className = 'heart';
+
+            const randomX = Math.random() * 100; // Random position along the width
+            const randomDuration = 3 + Math.random() * 2; // Random duration
+
+            heart.style.left = `${randomX}%`;
+            heart.style.animationDuration = `${randomDuration}s`;
+
+            heartsContainer.appendChild(heart);
+
+            setTimeout(() => heart.remove(), randomDuration * 1000);
+        }
+
+        setInterval(createHeart, 300); // Create hearts at regular intervals
     </script>
 </body>
 </html>
+
