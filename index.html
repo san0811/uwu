@@ -139,8 +139,8 @@
         function moveNoButton() {
             const noButton = document.querySelector('.no');
             if (noButtonMoved < 5) {
-                const randomX = Math.random() * 300 - 150; // Random X offset
-                const randomY = Math.random() * 300 - 150; // Random Y offset
+                const randomX = Math.random() * 500 - 250; // Increased random X offset
+                const randomY = Math.random() * 500 - 250; // Increased random Y offset
                 noButton.style.transform = `translate(${randomX}px, ${randomY}px)`;
                 noButtonMoved++;
             } else {
@@ -155,10 +155,10 @@
             const popupText = document.getElementById('popupText');
 
             if (choice === 'yes') {
-                popupImage.src = './images/1.jpg';
+                popupImage.src = 'https://via.placeholder.com/100?text=Yes';
                 popupText.textContent = 'You made the right choice! ❤️ You’re the best thing that’s ever happened to me! 🌹';
             } else {
-                popupImage.src = './images/2.jpg';
+                popupImage.src = 'https://via.placeholder.com/100?text=No';
                 popupText.textContent = 'Oh no! 😢 Are you sure about that?';
             }
 
@@ -175,3 +175,4 @@
     </script>
 </body>
 </html>
+
