@@ -162,31 +162,14 @@
         .heart {
             position: absolute;
             bottom: 0;
-            width: 30px;
-            height: 30px;
-            background-color: red;
-            transform: rotate(-45deg);
+            width: 50px; /* Adjust size as needed */
+            height: auto;
             animation: floatUp 4s linear infinite;
         }
 
-        .heart::before,
-        .heart::after {
-            content: '';
-            position: absolute;
-            width: 30px;
-            height: 30px;
-            background-color: red;
-            border-radius: 50%;
-        }
-
-        .heart::before {
-            top: -15px;
-            left: 0;
-        }
-
-        .heart::after {
-            left: 15px;
-            top: 0;
+        .heart img {
+            width: 100%;
+            height: auto;
         }
 
         .floating-image {
@@ -289,6 +272,11 @@
             const heart = document.createElement('div');
             heart.className = 'heart';
 
+            const img = document.createElement('img');
+            img.src = './images/1.jpg'; // Replace with the path to your small image
+            img.alt = 'Floating Heart';
+            heart.appendChild(img);
+
             const randomX = Math.random() * 100; // Random position along the width
             const randomDuration = 3 + Math.random() * 2; // Random duration
 
@@ -304,5 +292,3 @@
     </script>
 </body>
 </html>
-
-
