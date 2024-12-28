@@ -23,6 +23,15 @@
             }
         }
 
+        @keyframes twinkle {
+            0%, 100% {
+                opacity: 0.8;
+            }
+            50% {
+                opacity: 0.2;
+            }
+        }
+
         body {
             margin: 0;
             font-family: 'Poppins', sans-serif;
@@ -44,6 +53,26 @@
             align-items: center;
             padding: 20px;
             z-index: 2;
+        }
+
+        .stars {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            pointer-events: none;
+            z-index: 1;
+            overflow: hidden;
+        }
+
+        .star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background-color: white;
+            border-radius: 50%;
+            animation: twinkle 3s infinite;
         }
 
         iframe {
@@ -172,6 +201,7 @@
     </style>
 </head>
 <body>
+    <div class="stars" id="stars"></div>
     <div class="hearts-container" id="heartsContainer"></div>
 
     <div class="container">
@@ -247,8 +277,29 @@
             setTimeout(() => heart.remove(), randomDuration * 1000);
         }
 
+        function createStars() {
+            const starsContainer = document.getElementById('stars');
+            for (let i = 0; i < 100; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+
+                const randomX = Math.random() * 100;
+                const randomY = Math.random() * 100;
+                const randomSize = Math.random() * 3 + 1; // Random size between 1px and 4px
+                const randomDelay = Math.random() * 3; // Random delay
+
+                star.style.left = `${randomX}%`;
+                star.style.top = `${randomY}%`;
+                star.style.width = `${randomSize}px`;
+                star.style.height = `${randomSize}px`;
+                star.style.animationDelay = `${randomDelay}s`;
+
+                starsContainer.appendChild(star);
+            }
+        }
+
         setInterval(createHeart, 300); // Create hearts at regular intervals
+        createStars(); // Add stars on load
     </script>
 </body>
 </html>
-
