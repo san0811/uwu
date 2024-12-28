@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>For You ❤️</title>
+    <title>For Elliee ❤️</title>
     <style>
         /* General Styling */
         @keyframes gradientMove {
@@ -20,24 +20,6 @@
             100% {
                 transform: translateY(-200px) scale(0.5);
                 opacity: 0;
-            }
-        }
-
-        @keyframes floatAroundRestricted {
-            0% {
-                transform: translate(0, 0);
-            }
-            25% {
-                transform: translate(calc(20vw - 50px), calc(-10vh + 50px));
-            }
-            50% {
-                transform: translate(calc(-20vw + 50px), calc(-20vh + 50px));
-            }
-            75% {
-                transform: translate(calc(10vw - 50px), calc(10vh - 50px));
-            }
-            100% {
-                transform: translate(0, 0);
             }
         }
 
@@ -62,6 +44,16 @@
             align-items: center;
             padding: 20px;
             z-index: 2;
+        }
+
+        iframe {
+            border: none;
+            border-radius: 15px;
+            margin-bottom: 20px;
+            width: 90%;
+            max-width: 500px;
+            height: 300px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
         }
 
         h1 {
@@ -99,55 +91,6 @@
             box-shadow: 0 8px 20px rgba(255, 107, 107, 0.8);
         }
 
-        .no {
-            position: relative;
-        }
-
-        .popup {
-            display: none;
-            position: fixed;
-            top: 50%;
-            left: 50%;
-            transform: translate(-50%, -50%);
-            background: rgba(255, 255, 255, 0.9);
-            color: #333;
-            padding: 20px;
-            border-radius: 10px;
-            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
-            text-align: center;
-            z-index: 1000;
-        }
-
-        .popup img {
-            max-width: 100px;
-            margin-bottom: 15px;
-        }
-
-        .popup button {
-            padding: 10px 20px;
-            background-color: #ff6b6b;
-            border: none;
-            border-radius: 30px;
-            color: #fff;
-            cursor: pointer;
-        }
-
-        .popup button:hover {
-            transform: scale(1.1);
-            box-shadow: 0 8px 20px rgba(255, 107, 107, 0.8);
-        }
-
-        .overlay {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.5);
-            z-index: 999;
-        }
-
         .hearts-container {
             position: absolute;
             top: 0;
@@ -162,7 +105,7 @@
         .heart {
             position: absolute;
             bottom: 0;
-            width: 50px; /* Adjust size as needed */
+            width: 50px;
             height: auto;
             animation: floatUp 4s linear infinite;
         }
@@ -172,98 +115,114 @@
             height: auto;
         }
 
-        .floating-image {
-            position: absolute;
-            width: 100px;
-            height: auto;
-            animation: floatAroundRestricted 10s infinite ease-in-out;
+        .modal {
+            position: fixed;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            background-color: #fff;
+            border-radius: 15px;
+            padding: 20px;
+            text-align: center;
+            z-index: 100;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.3);
+            display: none;
+            max-width: 90%;
+            width: 400px;
+            color: #333;
         }
 
-        /* Responsive Design */
-        @media (max-width: 768px) {
-            h1 {
-                font-size: 2rem;
-            }
+        .modal img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+            margin-bottom: 15px;
+        }
 
-            h2 {
-                font-size: 1rem;
-            }
+        .modal p {
+            font-size: 1.2rem;
+            margin: 10px 0;
+        }
 
-            .button {
-                padding: 10px 20px;
-                font-size: 1rem;
-            }
+        .modal button {
+            margin-top: 15px;
+            padding: 10px 20px;
+            font-size: 1rem;
+            background-color: #ff6b6b;
+            color: #fff;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
 
-            .floating-image {
-                width: 70px;
-            }
+        .modal button:hover {
+            background-color: #ff3b3b;
+        }
+
+        .overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: 99;
+            display: none;
         }
     </style>
 </head>
 <body>
     <div class="hearts-container" id="heartsContainer"></div>
 
-    <img src="./images/3.jpg" alt="Floating Fun" class="floating-image">
-
     <div class="container">
-        <h1>Will you be my favorite person forever Eliyana? 💖</h1>
+        <!-- YouTube Video -->
+        <iframe 
+            src="https://www.youtube.com/embed/sMWrL0O6XZA" 
+            title="YouTube video player" 
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" 
+            allowfullscreen>
+        </iframe>
+
+        <h1>Happy Birthday Eliyana Zulaikha? 💖</h1>
         <h2>Please choose wisely! 😏</h2>
         <div class="buttons">
             <button class="button yes" onclick="showPopup('yes')">Yes</button>
-            <button class="button no" onclick="moveNoButton()">No</button>
+            <button class="button no" onclick="showPopup('no')">No</button>
         </div>
     </div>
 
-    <div class="overlay" id="overlay" onclick="closePopup()"></div>
-
-    <div class="popup" id="popup">
-        <img id="popupImage" src="" alt="">
-        <p id="popupText"></p>
+    <!-- Modal -->
+    <div class="overlay" id="overlay"></div>
+    <div class="modal" id="modal">
+        <img id="modalImage" src="" alt="Popup Image">
+        <p id="modalText"></p>
         <button onclick="closePopup()">Close</button>
     </div>
 
     <script>
-        let noButtonMoved = 0;
-
-        function moveNoButton() {
-            const noButton = document.querySelector('.no');
-            const container = document.querySelector('.container');
-
-            if (noButtonMoved < 10) {
-                const containerRect = container.getBoundingClientRect();
-                const randomX = Math.random() * (containerRect.width - 100);
-                const randomY = Math.random() * (containerRect.height - 50);
-                noButton.style.position = 'absolute';
-                noButton.style.left = `${randomX}px`;
-                noButton.style.top = `${randomY}px`;
-                noButtonMoved++;
-            } else {
-                showPopup('no');
-            }
-        }
-
-        function showPopup(choice) {
-            const popup = document.getElementById('popup');
+        function showPopup(response) {
+            const modal = document.getElementById('modal');
             const overlay = document.getElementById('overlay');
-            const popupImage = document.getElementById('popupImage');
-            const popupText = document.getElementById('popupText');
+            const modalImage = document.getElementById('modalImage');
+            const modalText = document.getElementById('modalText');
 
-            if (choice === 'yes') {
-                popupImage.src = './images/1.jpg';
-                popupText.textContent = 'You made the right choice! ❤️ You’re the best thing that’s ever happened to me! 🌹';
-            } else {
-                popupImage.src = './images/2.jpg';
-                popupText.textContent = 'Oh no! 😢 Are you sure about that?';
+            if (response === 'yes') {
+                modalImage.src = './images/1.jpg'; // Replace with your image path
+                modalText.textContent = "Yay! You made the right choice! Happy Birthday Elliee! 🎉💖";
+            } else if (response === 'no') {
+                modalImage.src = './images/2.jpg'; // Replace with your image path
+                modalText.textContent = "Oh no! Are you sure? Try again! 😜";
             }
 
-            popup.style.display = 'block';
+            modal.style.display = 'block';
             overlay.style.display = 'block';
         }
 
         function closePopup() {
-            const popup = document.getElementById('popup');
+            const modal = document.getElementById('modal');
             const overlay = document.getElementById('overlay');
-            popup.style.display = 'none';
+
+            modal.style.display = 'none';
             overlay.style.display = 'none';
         }
 
@@ -273,7 +232,7 @@
             heart.className = 'heart';
 
             const img = document.createElement('img');
-            img.src = './images/1.jpg'; // Replace with the path to your small image
+            img.src = './images/1.jpg'; // Replace with the path to your floating heart image
             img.alt = 'Floating Heart';
             heart.appendChild(img);
 
@@ -292,3 +251,4 @@
     </script>
 </body>
 </html>
+
